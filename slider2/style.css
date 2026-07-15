@@ -1,11 +1,3 @@
-/* ==================================================================== */
-/*  ZEST & CO — SIGNATURE MENU / 3D COVERFLOW CAROUSEL                  */
-/*  Design language: modern, warm, minimal restaurant UI (2026).        */
-/*  Dark layered surfaces — NOT pure black, NOT glassy, NOT neon.       */
-/*  Gold is reserved strictly for: price, stars, active button,         */
-/*  active pagination dot, and the eyebrow accent.                      */
-/* ==================================================================== */
-
 :root {
   --main-bg: #0B0C10;
   --card-bg: #1F2833;
@@ -13,29 +5,15 @@
   --accent-gold: #C5A880;
   --accent-gold-bright: #D4AF37;
   --border: rgba(197, 168, 128, .18);
-
-  /* --- Derived tokens (built on top of the required variables) ---   */
-  /* A lighter layered surface, one step up from --main-bg, used for   */
-  /* the section background so the page doesn't read as "all black".  */
-  --surface-1: #14161c;
+    --surface-1: #14161c;
   --surface-2: #1a1d24;
-
-  /* Muted body text — softer than --text-light for descriptions.     */
   --text-muted: rgba(245, 245, 247, 0.64);
   --text-faint: rgba(245, 245, 247, 0.42);
-
-  /* Shadows: soft and warm-tinted, never harsh black.                 */
   --shadow-soft: 0 10px 30px -14px rgba(0, 0, 0, 0.45);
   --shadow-hover: 0 22px 44px -16px rgba(0, 0, 0, 0.55);
-
-  /* Motion */
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-slide: 700ms;
 }
-
-/* -------------------------------------------------------------------- */
-/*  Base                                                                 */
-/* -------------------------------------------------------------------- */
 
 *,
 *::before,
@@ -50,16 +28,12 @@ body {
   -webkit-font-smoothing: antialiased;
   margin: 0;
 }
-
-/* Respect reduced-motion preferences across the whole section */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
 }
-
-/* Visible, accessible focus state used everywhere in this section */
 .menu-section a:focus-visible,
 .menu-section button:focus-visible,
 .menu-section [tabindex]:focus-visible {
@@ -67,11 +41,6 @@ body {
   outline-offset: 3px;
   border-radius: 6px;
 }
-
-/* -------------------------------------------------------------------- */
-/*  Section shell                                                        */
-/* -------------------------------------------------------------------- */
-
 .menu-section {
   position: relative;
   background:
@@ -84,10 +53,6 @@ body {
 .menu-container {
   max-width: 1280px;
 }
-
-/* -------------------------------------------------------------------- */
-/*  Heading                                                              */
-/* -------------------------------------------------------------------- */
 
 .menu-heading {
   max-width: 640px;
