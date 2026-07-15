@@ -25,22 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // autoplay
     autoplay: {
       delay: 3000, // every 3 seconds
-      disableOnInteraction: false, // keep autoplay running after manual swipes
-      pauseOnMouseEnter: true, // pause on hover
+      disableOnInteraction: false, 
+      pauseOnMouseEnter: true,
     },
-
-    /* ---------------------------------------------------------------
-       Input methods
-    --------------------------------------------------------------- */
     keyboard: {
       enabled: true,
       onlyInViewport: true,
     },
     mousewheel: false,
 
-    /* ---------------------------------------------------------------
-       Navigation & pagination (custom elements defined in index.html)
-    --------------------------------------------------------------- */
     navigation: {
       nextEl: ".menu-nav-next",
       prevEl: ".menu-nav-prev",
@@ -50,22 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
       clickable: true,
       bulletActiveClass: "swiper-pagination-bullet-active",
     },
-
-    /* ---------------------------------------------------------------
-       Accessibility
-    --------------------------------------------------------------- */
     a11y: {
       enabled: true,
       prevSlideMessage: "Previous dish",
       nextSlideMessage: "Next dish",
       slideLabelMessage: "Dish {{index}} of {{slidesLength}}",
     },
-
-    /* ---------------------------------------------------------------
-       Responsive breakpoints
-       Mobile keeps the coverflow feel but with a tighter rotation/
-       depth so the effect never looks cramped on narrow screens.
-    --------------------------------------------------------------- */
     breakpoints: {
       0: {
         spaceBetween: -24,
@@ -97,11 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 
-  /* -----------------------------------------------------------------
-     Pause autoplay on hover for browsers/edge-cases where the native
-     `pauseOnMouseEnter` option doesn't catch pointer events fired on
-     child elements (e.g. some touch-enabled laptops).
-  ----------------------------------------------------------------- */
   var wrapper = document.querySelector(".menu-carousel-wrapper");
   if (wrapper) {
     wrapper.addEventListener("mouseenter", function () {
@@ -112,11 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /* -----------------------------------------------------------------
-     "Order Now" button demo handler.
-     Replace this with a real add-to-cart / checkout integration.
-     Kept intentionally simple and framework-agnostic.
-  ----------------------------------------------------------------- */
   document.querySelectorAll(".btn-order").forEach(function (btn) {
     btn.addEventListener("click", function (event) {
       // Prevent the click from being interpreted as a slide-drag by Swiper
