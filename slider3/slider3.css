@@ -1,6 +1,14 @@
 * {
     box-sizing: border-box;
 }
+:root {
+  --main-bg: #0B0C10;        
+  --card-bg: #1F2833;        
+  --text-light: #F5F5F7;     
+  --accent-gold: #C5A880;   
+  --accent-gold-bright: #D4AF37;
+  --border: rgba(197,168,128,.18);
+} 
 
 body {
     margin: 0;
