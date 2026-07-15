@@ -19,17 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
       modifier: 1,
       slideShadows: false,
     },
-
-    /* ---------------------------------------------------------------
-       Timing / easing — smooth, hardware-accelerated transitions
-    --------------------------------------------------------------- */
-    speed: 700, // 700ms transition
-    cssMode: false, // keep transform-based rendering (GPU accelerated)
+    speed: 700,
+    cssMode: false, 
     watchOverflow: true,
-
-    /* ---------------------------------------------------------------
-       Autoplay
-    --------------------------------------------------------------- */
+    // autoplay
     autoplay: {
       delay: 3000, // every 3 seconds
       disableOnInteraction: false, // keep autoplay running after manual swipes
