@@ -257,13 +257,6 @@ body {
 .btn-order:active {
   transform: translateY(0);
 }
-
-/* -------------------------------------------------------------------- */
-/*  Coverflow depth styling                                              */
-/*  Non-active slides are gently dimmed/desaturated so the centered      */
-/*  dish reads as the clear focal point without harsh shadows or glow.   */
-/* -------------------------------------------------------------------- */
-
 .menu-slide {
   transition: opacity var(--duration-slide) var(--ease-smooth);
 }
@@ -279,10 +272,6 @@ body {
 .menu-slide:not(.swiper-slide-active) .dish-card:hover {
   opacity: 0.85;
 }
-
-/* -------------------------------------------------------------------- */
-/*  Custom navigation arrows                                             */
-/* -------------------------------------------------------------------- */
 
 .menu-nav-btn {
   position: absolute;
@@ -328,11 +317,6 @@ body {
     top: 40%;
   }
 }
-
-/* -------------------------------------------------------------------- */
-/*  Custom pagination                                                    */
-/* -------------------------------------------------------------------- */
-
 .menu-pagination {
   display: flex;
   align-items: center;
