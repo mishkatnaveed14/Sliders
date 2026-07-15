@@ -20,12 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
       slideShadows: false,
     },
     speed: 700,
-    cssMode: false, 
+    cssMode: false,
     watchOverflow: true,
     // autoplay
     autoplay: {
       delay: 3000, // every 3 seconds
-      disableOnInteraction: false, 
+      disableOnInteraction: false,
       pauseOnMouseEnter: true,
     },
     keyboard: {
@@ -92,11 +92,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.querySelectorAll(".btn-order").forEach(function (btn) {
     btn.addEventListener("click", function (event) {
-      // Prevent the click from being interpreted as a slide-drag by Swiper
       event.stopPropagation();
-
       var dishName = btn.getAttribute("data-dish") || "this dish";
-      // Replace the line below with your actual ordering/cart logic.
       console.log("Order requested for: " + dishName);
     });
   });
