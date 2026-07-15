@@ -5,24 +5,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   var menuSwiper = new Swiper(swiperEl, {
-  
-    loop: true, // infinite loop
-    centeredSlides: true, // active card sits in the middle
-    slidesPerView: "auto", // widths come from CSS (.menu-slide)
-    spaceBetween: -40, // slight overlap so side cards peek in
+    loop: true,
+    centeredSlides: true,
+    slidesPerView: "auto",
+    spaceBetween: -40,
     watchSlidesProgress: true,
-    grabCursor: true, // shows a "grab" cursor for mouse drag
-
-    /* ---------------------------------------------------------------
-       3D Coverflow effect
-    --------------------------------------------------------------- */
+    grabCursor: true,
     effect: "coverflow",
     coverflowEffect: {
-      rotate: 32, // side cards rotated naturally in 3D space
+      rotate: 32,
       stretch: 0,
-      depth: 260, // true 3D depth between active/side cards
+      depth: 260,
       modifier: 1,
-      slideShadows: false, // no built-in drop shadows — we use our own soft card shadow
+      slideShadows: false,
     },
 
     /* ---------------------------------------------------------------
