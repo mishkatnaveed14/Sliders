@@ -1,61 +1,44 @@
-/* ======================================================================
-   ZEST & CO — SIGNATURE MENU CAROUSEL
-   Swiper.js 3D Coverflow initialization.
-
-   This file is self-contained: it only touches elements inside
-   `.menu-swiper` / `.menu-carousel-wrapper`, so it can be dropped into
-   any page that includes the matching HTML/CSS without conflicting
-   with other scripts on the page.
-   ====================================================================== */
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  var swiperEl = document.querySelector('.menu-swiper');
-  if (!swiperEl || typeof Swiper === 'undefined') {
-    // Fail quietly if Swiper's script hasn't loaded or the markup
-    // isn't present on this page — avoids throwing console errors
-    // on unrelated pages that might include this file by mistake.
+document.addEventListener("DOMContentLoaded", function () {
+  var swiperEl = document.querySelector(".menu-swiper");
+  if (!swiperEl || typeof Swiper === "undefined") {
     return;
   }
 
   var menuSwiper = new Swiper(swiperEl, {
-
-    /* ---------------------------------------------------------------
-       Core behaviour
-    --------------------------------------------------------------- */
-    loop: true,                 // infinite loop
-    centeredSlides: true,       // active card sits in the middle
-    slidesPerView: 'auto',      // widths come from CSS (.menu-slide)
-    spaceBetween: -40,          // slight overlap so side cards peek in
+  
+    loop: true, // infinite loop
+    centeredSlides: true, // active card sits in the middle
+    slidesPerView: "auto", // widths come from CSS (.menu-slide)
+    spaceBetween: -40, // slight overlap so side cards peek in
     watchSlidesProgress: true,
-    grabCursor: true,           // shows a "grab" cursor for mouse drag
+    grabCursor: true, // shows a "grab" cursor for mouse drag
 
     /* ---------------------------------------------------------------
        3D Coverflow effect
     --------------------------------------------------------------- */
-    effect: 'coverflow',
+    effect: "coverflow",
     coverflowEffect: {
-      rotate: 32,          // side cards rotated naturally in 3D space
+      rotate: 32, // side cards rotated naturally in 3D space
       stretch: 0,
-      depth: 260,          // true 3D depth between active/side cards
+      depth: 260, // true 3D depth between active/side cards
       modifier: 1,
-      slideShadows: false  // no built-in drop shadows — we use our own soft card shadow
+      slideShadows: false, // no built-in drop shadows — we use our own soft card shadow
     },
 
     /* ---------------------------------------------------------------
        Timing / easing — smooth, hardware-accelerated transitions
     --------------------------------------------------------------- */
-    speed: 700,                         // 700ms transition
-    cssMode: false,                     // keep transform-based rendering (GPU accelerated)
+    speed: 700, // 700ms transition
+    cssMode: false, // keep transform-based rendering (GPU accelerated)
     watchOverflow: true,
 
     /* ---------------------------------------------------------------
        Autoplay
     --------------------------------------------------------------- */
     autoplay: {
-      delay: 3000,                      // every 3 seconds
-      disableOnInteraction: false,       // keep autoplay running after manual swipes
-      pauseOnMouseEnter: true            // pause on hover
+      delay: 3000, // every 3 seconds
+      disableOnInteraction: false, // keep autoplay running after manual swipes
+      pauseOnMouseEnter: true, // pause on hover
     },
 
     /* ---------------------------------------------------------------
@@ -63,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     --------------------------------------------------------------- */
     keyboard: {
       enabled: true,
-      onlyInViewport: true
+      onlyInViewport: true,
     },
     mousewheel: false,
 
@@ -71,13 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
        Navigation & pagination (custom elements defined in index.html)
     --------------------------------------------------------------- */
     navigation: {
-      nextEl: '.menu-nav-next',
-      prevEl: '.menu-nav-prev'
+      nextEl: ".menu-nav-next",
+      prevEl: ".menu-nav-prev",
     },
     pagination: {
-      el: '.menu-pagination',
+      el: ".menu-pagination",
       clickable: true,
-      bulletActiveClass: 'swiper-pagination-bullet-active'
+      bulletActiveClass: "swiper-pagination-bullet-active",
     },
 
     /* ---------------------------------------------------------------
@@ -85,9 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
     --------------------------------------------------------------- */
     a11y: {
       enabled: true,
-      prevSlideMessage: 'Previous dish',
-      nextSlideMessage: 'Next dish',
-      slideLabelMessage: 'Dish {{index}} of {{slidesLength}}'
+      prevSlideMessage: "Previous dish",
+      nextSlideMessage: "Next dish",
+      slideLabelMessage: "Dish {{index}} of {{slidesLength}}",
     },
 
     /* ---------------------------------------------------------------
@@ -102,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
           rotate: 18,
           depth: 140,
           stretch: 0,
-          modifier: 1
-        }
+          modifier: 1,
+        },
       },
       768: {
         spaceBetween: -32,
@@ -111,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
           rotate: 26,
           depth: 200,
           stretch: 0,
-          modifier: 1
-        }
+          modifier: 1,
+        },
       },
       1200: {
         spaceBetween: -40,
@@ -120,10 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
           rotate: 32,
           depth: 260,
           stretch: 0,
-          modifier: 1
-        }
-      }
-    }
+          modifier: 1,
+        },
+      },
+    },
   });
 
   /* -----------------------------------------------------------------
@@ -131,12 +114,12 @@ document.addEventListener('DOMContentLoaded', function () {
      `pauseOnMouseEnter` option doesn't catch pointer events fired on
      child elements (e.g. some touch-enabled laptops).
   ----------------------------------------------------------------- */
-  var wrapper = document.querySelector('.menu-carousel-wrapper');
+  var wrapper = document.querySelector(".menu-carousel-wrapper");
   if (wrapper) {
-    wrapper.addEventListener('mouseenter', function () {
+    wrapper.addEventListener("mouseenter", function () {
       if (menuSwiper.autoplay) menuSwiper.autoplay.stop();
     });
-    wrapper.addEventListener('mouseleave', function () {
+    wrapper.addEventListener("mouseleave", function () {
       if (menuSwiper.autoplay) menuSwiper.autoplay.start();
     });
   }
@@ -146,15 +129,14 @@ document.addEventListener('DOMContentLoaded', function () {
      Replace this with a real add-to-cart / checkout integration.
      Kept intentionally simple and framework-agnostic.
   ----------------------------------------------------------------- */
-  document.querySelectorAll('.btn-order').forEach(function (btn) {
-    btn.addEventListener('click', function (event) {
+  document.querySelectorAll(".btn-order").forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
       // Prevent the click from being interpreted as a slide-drag by Swiper
       event.stopPropagation();
 
-      var dishName = btn.getAttribute('data-dish') || 'this dish';
+      var dishName = btn.getAttribute("data-dish") || "this dish";
       // Replace the line below with your actual ordering/cart logic.
-      console.log('Order requested for: ' + dishName);
+      console.log("Order requested for: " + dishName);
     });
   });
-
 });
