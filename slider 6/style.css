@@ -758,3 +758,432 @@ button {
     transition-duration: 0.001ms !important;
   }
 }
+
+/*==========================================
+PREMIUM QUICK ACTION BAR
+==========================================*/
+
+.quick-action-section{
+
+    position:relative;
+
+    margin-top:-80px;
+
+    z-index:20;
+
+    padding-bottom:90px;
+
+}
+
+.quick-action{
+
+    display:grid;
+
+    grid-template-columns:
+    1.25fr
+    1fr
+    .9fr;
+
+    gap:24px;
+
+}
+
+.action-card{
+
+    background:var(--card-light-bg);
+
+    border:1px solid var(--border-card);
+
+    border-radius:24px;
+
+    padding:28px;
+
+    box-shadow:var(--card-shadow);
+
+    transition:.45s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.action-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        rgba(212,175,55,.08),
+        transparent 45%
+    );
+
+    opacity:0;
+
+    transition:.45s;
+
+}
+
+.action-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.10);
+
+}
+
+.action-card:hover::before{
+
+    opacity:1;
+
+}
+
+.card-label{
+
+    display:block;
+
+    margin-bottom:20px;
+
+    font-size:.78rem;
+
+    font-weight:600;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    color:var(--text-muted);
+
+}
+/*============================
+ORDER TOGGLE
+=============================*/
+
+.toggle-wrapper{
+
+    position:relative;
+
+    display:flex;
+
+    background:var(--gold-soft-bg);
+
+    border-radius:60px;
+
+    padding:6px;
+
+    gap:6px;
+
+}
+
+.toggle-indicator{
+
+    position:absolute;
+
+    top:6px;
+
+    left:6px;
+
+    width:calc(33.333% - 8px);
+
+    height:calc(100% - 12px);
+
+    background:var(--accent-gold);
+
+    border-radius:50px;
+
+    transition:.4s cubic-bezier(.22,1,.36,1);
+
+    z-index:1;
+
+}
+
+.toggle-btn{
+
+    position:relative;
+
+    flex:1;
+
+    border:none;
+
+    background:transparent;
+
+    height:52px;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    z-index:2;
+
+    color:var(--text-dark);
+
+    transition:.35s;
+
+}
+
+.toggle-btn.active{
+
+    color:#fff;
+
+}
+
+.toggle-btn i{
+
+    margin-right:8px;
+
+}
+/*==========================================
+LOCATION CARD
+==========================================*/
+
+.location-wrapper {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.input-box {
+    flex: 1;
+    position: relative;
+}
+
+.input-box i {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+    color: var(--accent-gold);
+    font-size: 1rem;
+}
+
+.input-box input {
+    width: 100%;
+    height: 56px;
+    padding: 0 18px 0 48px;
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    background: #fff;
+    outline: none;
+    font-size: .95rem;
+    transition: .35s;
+}
+
+.input-box input:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, .12);
+}
+
+.check-btn {
+    position: relative;
+    width: 120px;
+    height: 56px;
+    border: none;
+    border-radius: 16px;
+    background: var(--accent-gold);
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    transition: .35s;
+    font-weight: 600;
+}
+
+.check-btn:hover {
+    background: var(--accent-gold-bright);
+    transform: translateY(-2px);
+}
+
+.loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    display: none;
+    margin: auto;
+}
+
+.check-btn.loading .btn-text {
+    display: none;
+}
+
+.check-btn.loading .loader {
+    display: block;
+}
+
+.delivery-result {
+    display: block;
+    margin-top: 16px;
+    font-weight: 600;
+    min-height: 22px;
+    color: #2e7d32;
+}
+
+
+/*==========================================
+CONTACT CARD
+==========================================*/
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #28c76f;
+    animation: pulse 2s infinite;
+}
+
+.status-text {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.opening-time {
+    margin-bottom: 22px;
+    color: var(--text-muted);
+}
+
+.opening-time i {
+    color: var(--accent-gold);
+    margin-right: 8px;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.contact-buttons a {
+    flex: 1;
+    text-decoration: none;
+    text-align: center;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid var(--border-card);
+    color: var(--text-dark);
+    font-weight: 600;
+    transition: .35s;
+}
+
+.contact-buttons a i {
+    margin-right: 8px;
+}
+
+.contact-buttons a:hover {
+    background: var(--accent-gold);
+    color: #fff;
+    border-color: var(--accent-gold);
+    transform: translateY(-3px);
+}
+
+
+/*==========================================
+STICKY EFFECT
+==========================================*/
+
+.quick-action-section.sticky {
+    position: sticky;
+    top: 90px;
+}
+
+
+/*==========================================
+ANIMATIONS
+==========================================*/
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0% {
+        box-shadow: 0 0 0 0 rgba(40,199,111,.6);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(40,199,111,0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(40,199,111,0);
+    }
+
+}
+
+
+/*==========================================
+RESPONSIVE
+==========================================*/
+
+@media (max-width: 992px) {
+
+    .quick-action-section {
+        margin-top: 40px;
+        padding-bottom: 60px;
+    }
+
+    .quick-action {
+        grid-template-columns: 1fr;
+    }
+
+    .location-wrapper {
+        flex-direction: column;
+    }
+
+    .check-btn {
+        width: 100%;
+    }
+
+    .contact-buttons {
+        flex-direction: column;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .action-card{
+        padding:22px;
+        border-radius:20px;
+    }
+
+    .toggle-wrapper{
+        flex-direction:column;
+        background:transparent;
+        padding:0;
+    }
+
+    .toggle-indicator{
+        display:none;
+    }
+
+    .toggle-btn{
+        background:var(--gold-soft-bg);
+        color:var(--text-dark);
+    }
+
+    .toggle-btn.active{
+        background:var(--accent-gold);
+        color:#fff;
+    }
+
+}

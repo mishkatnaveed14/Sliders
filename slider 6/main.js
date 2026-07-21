@@ -307,3 +307,218 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+
+// -------------------------------------
+
+
+/*==========================================
+PREMIUM QUICK ACTION BAR
+==========================================*/
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /*============================
+      ORDER TOGGLE
+    ============================*/
+
+    const buttons = document.querySelectorAll(".toggle-btn");
+    const indicator = document.querySelector(".toggle-indicator");
+
+    function moveIndicator(index){
+
+        indicator.style.transform =
+        `translateX(${index * 100}%)`;
+
+    }
+
+    buttons.forEach(btn=>{
+
+        btn.addEventListener("click",()=>{
+
+            buttons.forEach(b=>b.classList.remove("active"));
+
+            btn.classList.add("active");
+
+            moveIndicator(btn.dataset.index);
+
+        });
+
+    });
+
+
+
+    /*============================
+      DELIVERY CHECK
+    ============================*/
+
+    const input =
+    document.querySelector(".input-box input");
+
+    const checkBtn =
+    document.querySelector(".check-btn");
+
+    const result =
+    document.querySelector(".delivery-result");
+
+
+    const availableAreas = [
+
+        "gulshan",
+        "gulistan",
+        "clifton",
+        "dha",
+        "nazimabad",
+        "north nazimabad",
+        "bahadurabad",
+        "malir",
+        "pechs"
+
+    ];
+
+
+    checkBtn.addEventListener("click",()=>{
+
+        const value =
+        input.value.trim().toLowerCase();
+
+        if(value===""){
+
+            result.style.color="#e53935";
+
+            result.textContent=
+            "Please enter your area.";
+
+            return;
+
+        }
+
+        checkBtn.classList.add("loading");
+
+        setTimeout(()=>{
+
+            checkBtn.classList.remove("loading");
+
+            if(availableAreas.includes(value)){
+
+                result.style.color="#2e7d32";
+
+                result.innerHTML=
+                "✅ Great! Delivery is available.";
+
+            }
+
+            else{
+
+                result.style.color="#d32f2f";
+
+                result.innerHTML=
+                "❌ Sorry, delivery isn't available yet.";
+
+            }
+
+        },1200);
+
+    });
+
+
+
+    /*============================
+      OPEN / CLOSED
+    ============================*/
+
+    const dot =
+    document.querySelector(".status-dot");
+
+    const status =
+    document.querySelector(".status-text");
+
+    const hour =
+    new Date().getHours();
+
+    if(hour>=10 && hour<23){
+
+        dot.style.background="#28c76f";
+
+        status.textContent="Open Now";
+
+    }
+
+    else{
+
+        dot.style.background="#ef4444";
+
+        status.textContent="Closed";
+
+    }
+
+
+
+    /*============================
+      RIPPLE EFFECT
+    ============================*/
+
+    document.querySelectorAll("button").forEach(button=>{
+
+        button.addEventListener("click",function(e){
+
+            const circle =
+            document.createElement("span");
+
+            const size =
+            Math.max(
+                this.clientWidth,
+                this.clientHeight
+            );
+
+            circle.style.width=size+"px";
+            circle.style.height=size+"px";
+
+            circle.style.left=
+            e.offsetX-size/2+"px";
+
+            circle.style.top=
+            e.offsetY-size/2+"px";
+
+            circle.classList.add("ripple");
+
+            this.appendChild(circle);
+
+            setTimeout(()=>{
+
+                circle.remove();
+
+            },600);
+
+        });
+
+    });
+
+
+
+    /*============================
+      STICKY SHADOW
+    ============================*/
+
+    const section =
+    document.querySelector(".quick-action-section");
+
+    window.addEventListener("scroll",()=>{
+
+        if(window.scrollY>250){
+
+            section.classList.add("sticky");
+
+        }
+
+        else{
+
+            section.classList.remove("sticky");
+
+        }
+
+    });
+
+});
+
