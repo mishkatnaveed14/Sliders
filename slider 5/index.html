@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slider -- 5</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <!-- Google Fonts (Cinzel for headings, Plus Jakarta Sans for body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-dark: #0c0d0f;
+      --card-bg: rgba(22, 25, 31, 0.7);
+      --accent-gold: #f59e0b;
+      --accent-gold-glow: rgba(245, 158, 11, 0.4);
+      --text-light: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Ambient Background Glows */
+    .hero-container {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+      padding: 100px 0 60px 0;
+    }
+
+    /* Status Badge */
+    .status-badge {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    /* Gradient Text */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Buttons */
+    .btn-gold-glow {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #000;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 50px;
+      border: none;
+      box-shadow: 0 0 25px var(--accent-gold-glow);
+      transition: all 0.3s ease;
+    }
+
+    .btn-gold-glow:hover {
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.7);
+      transform: translateY(-2px);
+      color: #000;
+    }
+
+    .btn-outline-custom {
+      border: 2px solid rgba(245, 158, 11, 0.5);
+      color: var(--text-light);
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 50px;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-custom:hover {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    /* Food Dish Wrapper & Floating Elements */
+    .food-card-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-dish-img {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
+                  0 0 40px rgba(245, 158, 11, 0.2);
+      object-fit: cover;
+    }
+
+    /* Glassmorphism Badges */
+    .glass-badge {
+      position: absolute;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    .glass-badge-rating {
+      top: 10%;
+      left: 0%;
+    }
+
+    .glass-badge-delivery {
+      bottom: 10%;
+      right: 0%;
+    }
+
+    .badge-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .rating-icon {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .delivery-icon {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 991px) {
+      .hero-container {
+        text-align: center;
+        padding-top: 60px;
+      }
+      .cta-group {
+        justify-content: center;
+      }
+      .food-card-wrapper {
+        margin-top: 50px;
+      }
+      .glass-badge-rating {
+        left: 5%;
+      }
+      .glass-badge-delivery {
+        right: 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero-container">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        
+        <!-- LEFT COLUMN: Content -->
+        <div class="col-lg-6">
+          
+          <!-- Live Delivery Status Badge -->
+          <div class="status-badge mb-4 gsap-hero-item">
+            <span class="pulse-dot"></span>
+            <span>Accepting Orders Now</span>
+          </div>
+
+          <!-- Main Heading -->
+          <h1 class="display-3 fw-bold mb-3 gsap-hero-item">
+            Taste The Art Of <br />
+            <span class="text-gold-gradient">Gourmet Dining</span>
+          </h1>
+
+          <!-- Subheading -->
+          <p class="lead text-muted mb-4 pb-2 fs-5 gsap-hero-item">
+            Experience hand-crafted culinary masterpieces prepared with fresh organic ingredients, delivered red-hot to your doorstep in minutes.
+          </p>
+
+          <!-- Call To Action Buttons -->
+          <div class="d-flex flex-wrap gap-3 align-items-center cta-group gsap-hero-item">
+            <a href="#menu" class="btn btn-gold-glow">
+              <i class="bi bi-bag-fill me-2"></i>Order Online
+            </a>
+            <a href="#reservation" class="btn btn-outline-custom">
+              <i class="bi bi-calendar-event me-2"></i>Reserve Table
+            </a>
+          </div>
+
+          <!-- Mini Stats/Trust Indicators -->
+          <div class="d-flex align-items-center gap-4 mt-5 pt-3 gsap-hero-item border-top border-secondary border-opacity-25">
+            <div>
+              <h4 class="mb-0 fw-bold brand-font text-gold-gradient">50+</h4>
+              <small class="text-muted">Chef Specials</small>
+            </div>
+            <div class="vr bg-secondary opacity-50" style="height: 35px;"></div>
+            <div>
+              <h4 class="mb-0 fw-bold brand-font text-gold-gradient">15k+</h4>
+              <small class="text-muted">Happy Foodies</small>
+            </div>
+            <div class="vr bg-secondary opacity-50" style="height: 35px;"></div>
+            <div>
+              <h4 class="mb-0 fw-bold brand-font text-gold-gradient">4.9 ★</h4>
+              <small class="text-muted">Google Reviews</small>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Floating Dish & Badges -->
+        <div class="col-lg-6">
+          <div class="food-card-wrapper">
+            
+            <!-- Rating Badge (Top Left) -->
+            <div class="glass-badge glass-badge-rating gsap-badge">
+              <div class="badge-icon rating-icon">
+                <i class="bi bi-star-fill"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold text-white">4.9 Star Rating</h6>
+                <small class="text-muted">2.4k+ Reviews</small>
+              </div>
+            </div>
+
+            <!-- Main Circular Food Image -->
+            <img 
+              src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" 
+              alt="Signature Gourmet Steak Dish" 
+              class="hero-dish-img gsap-dish"
+            />
+
+            <!-- Delivery Time Badge (Bottom Right) -->
+            <div class="glass-badge glass-badge-delivery gsap-badge">
+              <div class="badge-icon delivery-icon">
+                <i class="bi bi-lightning-charge-fill"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold text-white">Fast Delivery</h6>
+                <small class="text-muted">In 20 Mins Or Free</small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GSAP Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Custom JavaScript Animation Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Entrance Timeline for Text & CTAs
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.from(".gsap-hero-item", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15
+      })
+      .from(".gsap-dish", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1.2,
+        ease: "back.out(1.7)"
+      }, "-=0.8")
+      .from(".gsap-badge", {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2
+      }, "-=0.6");
+
+      // 2. Continuous Floating Animation for Food Dish
+      gsap.to(".gsap-dish", {
+        y: -15,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+
+      // 3. Subtle Floating for Glass Badges (Opposite direction)
+      gsap.to(".glass-badge-rating", {
+        y: 10,
+        x: -5,
+        duration: 2.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+
+      gsap.to(".glass-badge-delivery", {
+        y: -10,
+        x: 5,
+        duration: 2.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+    });
+  </script>
+
+</body>
+</html>
