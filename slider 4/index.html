@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider --- 4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Jost:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Base Styles & Fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Jost', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section Base */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 650px;
+            background-image: radial-gradient(circle at 20% 50%, rgba(30, 30, 30, 0.8), #0d0d0d 70%);
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .w-slider-mask {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Individual Slide Layout */
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        ._2-column-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .contents {
+            flex: 1;
+            max-width: 550px;
+        }
+
+        ._24px-primary-title {
+            color: #ffb400;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .margin-bottom-48px {
+            margin-bottom: 32px;
+        }
+
+        .white-0-8-opacity {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #ffb400;
+            color: #0d0d0d;
+            padding: 14px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .primary-button:hover {
+            background-color: #ffa500;
+            transform: translateY(-2px);
+        }
+
+        .primary-button.small {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Image Wrapper */
+        .image-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            max-width: 480px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.7));
+        }
+
+        /* Dots Navigation Bar */
+        .slide-nav {
+            position: absolute;
+            right: 4%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            z-index: 50;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #ffb400;
+            border-color: #ffffff;
+            transform: scale(1.2);
+        }
+
+        /* Social Icon Links */
+        .hero-social-links {
+            position: absolute;
+            bottom: 30px;
+            right: 5%;
+            display: flex;
+            gap: 20px;
+            z-index: 50;
+        }
+
+        .hero-social-links .social-links {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .hero-social-links .social-links:hover {
+            color: #ffb400;
+        }
+
+        /* Decorative Watermark  */
+        .bottom-left-absolute {
+            position: absolute;
+            bottom: 20px;
+            left: 4%;
+            opacity: 0.6;
+            width: 40px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Mobile & Tablet Responsiveness */
+        @media (max-width: 991px) {
+            .nav-links {
+                display: none;
+            }
+
+            ._2-column-block {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding-top: 80px;
+            }
+
+            .contents {
+                max-width: 100%;
+                order: 1;
+            }
+
+            .hero-title {
+                font-size: 2.3rem;
+            }
+
+            .hero-image {
+                max-width: 320px;
+            }
+
+            .slide-nav {
+                right: 2%;
+            }
+
+            .image-wrapper {
+                order: 2;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .primary-button {
+                padding: 10px 20px;
+            }
+
+            .hero-image {
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-section">
+        <div data-delay="4000" data-animation="slide" class="hero-slider w-slider" data-autoplay="false"
+            data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0"
+            data-nav-spacing="3" data-duration="500" data-infinite="true">
+            <div class="w-slider-mask">
+                <div class="hero-slide w-slide">
+                    <div class="container">
+                        <div class="_2-column-block">
+                            <div class="contents">
+                                <div class="_24px-primary-title">Discover Delight at Fastfood TNC</div>
+                                <h1 class="hero-title">Your Go-To Spot for Quick and Tasty Eats!</h1>
+                                <div class="margin-bottom-48px">
+                                    <p class="white-0-8-opacity">
+                                        Where quick eats and quality collide, crafting a taste sensation. Speed meets
+                                        flavor in every bite, promising a culinary journey that &#x27;s as swift as it
+                                        is delicious.
+                                        <!--$-->
+                                        <br />
+                                        <!--/$-->
+                                    </p>
+                                </div>
+                                <a href="/shop" class="primary-button w-inline-block">
+                                    <div>Order now</div>
+                                    <div class="icon">east</div>
+                                </a>
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/661cb13290b33a3378d08bc0_image.png"
+                                    loading="lazy" sizes="(max-width: 1349px) 100vw, 1349px"
+                                    srcset="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/661cb13290b33a3378d08bc0_image-p-500.png 500w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/661cb13290b33a3378d08bc0_image-p-800.png 800w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/661cb13290b33a3378d08bc0_image-p-1080.png 1080w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/661cb13290b33a3378d08bc0_image.png 1349w"
+                                    alt="" class="hero-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide w-slide">
+                    <div class="container">
+                        <div class="_2-column-block">
+                            <div class="contents">
+                                <div class="_24px-primary-title">Discover Delight at Fastfood TNC</div>
+                                <h1 class="hero-title">Your Go-To Spot for Quick and Tasty Eats!</h1>
+                                <div class="margin-bottom-48px">
+                                    <p class="white-0-8-opacity">
+                                        Where quick eats and quality collide, crafting a taste sensation. Speed meets
+                                        flavor in every bite, promising a culinary journey that &#x27;s as swift as it
+                                        is delicious.
+                                        <!--$-->
+                                        <br />
+                                        <!--/$-->
+                                    </p>
+                                </div>
+                                <a href="/shop" class="primary-button w-inline-block">
+                                    <div>Order now</div>
+                                    <div class="icon">east</div>
+                                </a>
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP.png"
+                                    loading="lazy" sizes="(max-width: 3000px) 100vw, 3000px"
+                                    srcset="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP-p-500.png 500w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP-p-800.png 800w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP-p-1080.png 1080w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP-p-1600.png 1600w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP-p-2000.png 2000w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP-p-2600.png 2600w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210f2fc3b3464a6a180ca7_wepik-export-202404181214557fEP.png 3000w"
+                                    alt="" class="hero-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide w-slide">
+                    <div class="container">
+                        <div class="_2-column-block">
+                            <div class="contents">
+                                <div class="_24px-primary-title">Discover Delight at Fastfood TNC</div>
+                                <h1 class="hero-title">Your Go-To Spot for Quick and Tasty Eats!</h1>
+                                <div class="margin-bottom-48px">
+                                    <p class="white-0-8-opacity">
+                                        Where quick eats and quality collide, crafting a taste sensation. Speed meets
+                                        flavor in every bite, promising a culinary journey that &#x27;s as swift as it
+                                        is delicious.
+                                        <!--$-->
+                                        <br />
+                                        <!--/$-->
+                                    </p>
+                                </div>
+                                <a href="/shop" class="primary-button w-inline-block">
+                                    <div>Order now</div>
+                                    <div class="icon">east</div>
+                                </a>
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210df4c3b3464a6a16c59c_image.png"
+                                    loading="lazy" sizes="(max-width: 512px) 100vw, 512px"
+                                    srcset="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210df4c3b3464a6a16c59c_image-p-500.png 500w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210df4c3b3464a6a16c59c_image.png 512w"
+                                    alt="" class="hero-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide w-slide">
+                    <div class="container">
+                        <div class="_2-column-block">
+                            <div class="contents">
+                                <div class="_24px-primary-title">Discover Delight at Fastfood TNC</div>
+                                <h1 class="hero-title">Your Go-To Spot for Quick and Tasty Eats!</h1>
+                                <div class="margin-bottom-48px">
+                                    <p class="white-0-8-opacity">
+                                        Where quick eats and quality collide, crafting a taste sensation. Speed meets
+                                        flavor in every bite, promising a culinary journey that &#x27;s as swift as it
+                                        is delicious.
+                                        <!--$-->
+                                        <br />
+                                        <!--/$-->
+                                    </p>
+                                </div>
+                                <a href="/shop" class="primary-button w-inline-block">
+                                    <div>Order now</div>
+                                    <div class="icon">east</div>
+                                </a>
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210efa802edd9170475c57_image%20(1).png"
+                                    loading="lazy" sizes="(max-width: 512px) 100vw, 512px"
+                                    srcset="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210efa802edd9170475c57_image%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210efa802edd9170475c57_image%20(1).png 512w"
+                                    alt="" class="hero-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide w-slide">
+                    <div class="container">
+                        <div class="_2-column-block">
+                            <div class="contents">
+                                <div class="_24px-primary-title">Discover Delight at Fastfood TNC</div>
+                                <h1 class="hero-title">Your Go-To Spot for Quick and Tasty Eats!</h1>
+                                <div class="margin-bottom-48px">
+                                    <p class="white-0-8-opacity">
+                                        Where quick eats and quality collide, crafting a taste sensation. Speed meets
+                                        flavor in every bite, promising a culinary journey that &#x27;s as swift as it
+                                        is delicious.
+                                        <!--$-->
+                                        <br />
+                                        <!--/$-->
+                                    </p>
+                                </div>
+                                <a href="/shop" class="primary-button w-inline-block">
+                                    <div>Order now</div>
+                                    <div class="icon">east</div>
+                                </a>
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210efa8e4b4099fd114212_pasta%20image.png"
+                                    loading="lazy" sizes="100vw"
+                                    srcset="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210efa8e4b4099fd114212_pasta%20image-p-500.png 500w, https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/66210efa8e4b4099fd114212_pasta%20image.png 512w"
+                                    alt="" class="hero-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden w-slider-arrow-left"></div>
+            <div class="hidden w-slider-arrow-right"></div>
+            <div class="slide-nav w-slider-nav w-round"></div>
+            <img src="https://cdn.prod.website-files.com/661cabfe491ead7e40ea563c/661cb5906971363425254ca0_arrow.svg"
+                loading="lazy" alt="" class="bottom-left-absolute" />
+            <div class="hero-social-links">
+                <a href="https://www.facebook.com/ThemeNcode/" target="_blank" class="social-links"></a>
+                <a href="https://pinterest.com/ThemeNcode" target="_blank" class="social-links"></a>
+                <a href="https://twitter.com/ThemeNcode" target="_blank" class="social-links"></a>
+                <a href="https://www.youtube.com/@ThemeNcodeOfficial" target="_blank" class="social-links"></a>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const slides = document.querySelectorAll('.hero-slide');
+                const slideNav = document.querySelector('.slide-nav');
+                let currentIndex = 0;
+                let isAnimating = false;
+                const autoPlayDelay = 4000;
+                let autoPlayTimer;
+                slides.forEach((_, idx) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('nav-dot');
+                    if (idx === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => {
+                        if (!isAnimating && idx !== currentIndex) {
+                            goToSlide(idx);
+                            resetAutoplay();
+                        }
+                    });
+                    slideNav.appendChild(dot);
+                });
+
+                const dots = document.querySelectorAll('.nav-dot');
+
+                slides.forEach((slide, idx) => {
+                    if (idx === 0) {
+                        slide.classList.add('active');
+                        gsap.set(slide, { opacity: 1, visibility: 'visible' });
+                    } else {
+                        gsap.set(slide, { opacity: 0, visibility: 'hidden' });
+                    }
+                });
+
+                function goToSlide(nextIndex) {
+                    isAnimating = true;
+
+                    const currentSlide = slides[currentIndex];
+                    const nextSlide = slides[nextIndex];
+
+                    const currentText = currentSlide.querySelectorAll('._24px-primary-title, .hero-title, .margin-bottom-48px, .primary-button');
+                    const currentImg = currentSlide.querySelector('.hero-image');
+
+                    const nextText = nextSlide.querySelectorAll('._24px-primary-title, .hero-title, .margin-bottom-48px, .primary-button');
+                    const nextImg = nextSlide.querySelector('.hero-image');
+
+                    // Update active class on dots
+                    dots[currentIndex].classList.remove('active');
+                    dots[nextIndex].classList.add('active');
+                    const tl = gsap.timeline({
+                        onComplete: () => {
+                            currentSlide.classList.remove('active');
+                            gsap.set(currentSlide, { opacity: 0, visibility: 'hidden' });
+                            currentIndex = nextIndex;
+                            isAnimating = false;
+                        }
+                    });
+
+                    // Animate OUT current slide elements
+                    tl.to(currentText, {
+                        y: -30,
+                        opacity: 0,
+                        duration: 0.4,
+                        stagger: 0.05,
+                        ease: 'power2.in'
+                    })
+                        .to(currentImg, {
+                            rotation: -40,
+                            scale: 0.7,
+                            opacity: 0,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        }, '<');
+
+                    //  Set IN target slide elements
+                    tl.call(() => {
+                        nextSlide.classList.add('active');
+                        gsap.set(nextSlide, { opacity: 1, visibility: 'visible' });
+                        gsap.set(nextText, { y: 40, opacity: 0 });
+                        gsap.set(nextImg, { rotation: 40, scale: 0.7, opacity: 0 });
+                    });
+
+                    // Step C: Animate IN next slide elements
+                    tl.to(nextImg, {
+                        rotation: 0,
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'back.out(1.2)'
+                    })
+                        .to(nextText, {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.6,
+                            stagger: 0.08,
+                            ease: 'power3.out'
+                        }, '-=0.5');
+                }
+
+                // 4. Autoplay Loop Implementation
+                function startAutoplay() {
+                    autoPlayTimer = setInterval(() => {
+                        const nextIdx = (currentIndex + 1) % slides.length;
+                        goToSlide(nextIdx);
+                    }, autoPlayDelay);
+                }
+
+                function resetAutoplay() {
+                    clearInterval(autoPlayTimer);
+                    startAutoplay();
+                }
+
+                // Start carousel autoplay
+                startAutoplay();
+            });
+        </script>
+</body>
+
+</html>
